@@ -33,9 +33,10 @@ const token = process.env.BOT_TOKEN;
  * Get the assignments with upcoming deadlines.
  * 
  * @param hours: the number of hours to look ahead
+ * @param dates: whether to include dates in deadlines
  * @return: the upcoming deadlines
  */
-client.getUpcomingDeadlines = (hours) => {
+client.getUpcomingDeadlines = (hours, dates=false) => {
   const upcoming = [];
   client.items.forEach(item => {
     const now = new Date();
@@ -44,7 +45,9 @@ client.getUpcomingDeadlines = (hours) => {
       const course = item.Course.select.name;
       const name = item.Name.title[0].plain_text;
       const location = item.Type.select.name;
-      const time = item.date.toLocaleTimeString('en-US', {timeZone: 'EST'});
+      const time = dates ? 
+        item.date.toLocaleString('en-US', {timeZone: 'EST'}) : 
+        item.date.toLocaleTimeString('en-US', {timeZone: 'EST'});
       upcoming.push({name: `${course} ${name}`, value: `${time} (EST)`});
     }
   });
