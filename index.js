@@ -3,12 +3,12 @@ const fs = require("fs");
 const axios = require('axios').default;
 const keep_alive = require('./keepAlive.js'); // TODO: implement smt that keeps it awake
 
-const DATABASE_ID = '93cdd6fd-d6a3-4384-a9e5-4319e6ca00ac';
+const DATABASE_ID = 'c89e55f3-feb4-47f7-b249-c77ccf0fcdff';
 const REQUEST_URL = `https://api.notion.com/v1/databases/${DATABASE_ID}/query`;
 const NOTION_TOKEN = process.env.NOTION_TOKEN;
 
 // discord stuff
-const DEADLINE_CHANNEL_ID = '938225877257441360';
+const DEADLINE_CHANNEL_ID = '932446122490855425';
 
 // this is the link to add https://discord.com/oauth2/authorize?scope=bot&client_id=938223326545981480
 // bot token added as BOT_TOKEN
@@ -46,9 +46,9 @@ client.getUpcomingDeadlines = (hours, dates=false) => {
       const name = item.Name.title[0].plain_text;
       const location = item.Type.select.name;
       const time = dates ? 
-        item.date.toLocaleString('en-US', {timeZone: 'EST'}) : 
-        item.date.toLocaleTimeString('en-US', {timeZone: 'EST'});
-      upcoming.push({name: `${course} ${name}`, value: `${time} (EST)`});
+        item.date.toLocaleString('en-US', {timeZone: 'MST7MDT'}) : 
+        item.date.toLocaleTimeString('en-US', {timeZone: 'MST7MDT'});
+      upcoming.push({name: `${course} ${name}`, value: `${time} (MST7MDT)`});
     }
   });
   return upcoming;
@@ -62,7 +62,7 @@ notifyDeadlines = async () => {
       .setTitle('Upcoming Deadlines')
       .setDescription(`@${client.deadlineRole}`)
       .addFields(...upcoming)
-      .setFooter({text: 'Generated from Notion: https://truered8.notion.site/truered8/93cdd6fdd6a34384a9e54319e6ca00ac'});
+      .setFooter({text: 'Generated from Notion: https://truered8.notion.site/truered8/c89e55f3feb447f7b249c77ccf0fcdff'});
     const channel = await client.channels.fetch(DEADLINE_CHANNEL_ID);
     channel.send({embeds: [embed]});
   }

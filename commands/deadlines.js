@@ -4,7 +4,7 @@ module.exports = {
   name: "deadlines",
   description: "Tells you your upcoming deadlines",
   execute(message, args, client) {
-    const hours = args.length ? args[0] * 24 : client.hoursUntilNotify;
+    const hours = args.length ? args[0] * 24 : Number.MAX_SAFE_INTEGER;
     const days = ~~(hours / 24);
     let title = 'Upcoming Deadlines';
     if(hours > 24) {
@@ -20,7 +20,7 @@ module.exports = {
       .setTitle(title)
       .setDescription(upcoming.length ? '' : 'No upcoming deadlines. Take a break!')
       .addFields(...upcoming)
-      .setFooter({text: 'Generated from Notion: https://truered8.notion.site/truered8/93cdd6fdd6a34384a9e54319e6ca00ac'});
+      .setFooter({text: 'Generated from Notion: https://truered8.notion.site/truered8/c89e55f3feb447f7b249c77ccf0fcdff'});
     message.reply({embeds: [embed]});
   },
 };
